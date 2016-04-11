@@ -1,0 +1,22 @@
+{
+    "name": "silverstripers/cloudinary",
+    "description": "Simple cloudinary integration",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "cloudinary"],
+    "authors": [
+        {
+            "name": "Nivanka Fonseka",
+            "email": "nivanka@silverstripers.com"
+        },
+        {
+            "name": "Priyashantha Hp",
+            "email": "priyashantha@silverstripers.com"
+        }
+    ],
+    "require": {
+        "silverstripe/framework": "3.*"
+    },
+    "extra": {
+        "installer-name": "cloudinary"
+    }
+}
