@@ -16,10 +16,12 @@ class CloudinaryFile extends DataObject
 	private static $api = null;
 
 	private static $db = array(
-		'PublicID'				=> 'Varchar(500)',
+		'CloudinaryURL'			=> 'Varchar(500)',
+		'Format'				=> 'Varchar(500)',
 		'Title'					=> 'Varchar(200)',
 		'Size'					=> 'Int',
-		'FileName'				=> 'Varchar(200)'
+		'FileName'				=> 'Varchar(200)',
+		'ResourceType'		 	=> 'Varchar(200)'
 	);
 
 
@@ -35,6 +37,23 @@ class CloudinaryFile extends DataObject
 			return isset($patterns[1]) ? $patterns[1] : '';
 		}
 		return $haystack;
+	}
+
+	public static function get_resource_type($haystack)
+	{
+		$config = SiteConfig::current_site_config();
+		$cloudName = $config->CloudName;
+
+
+		if(($nameStartsAt = strpos($haystack, $cloudName . '/')) >= 0){
+			$haystack = substr($haystack, $nameStartsAt + strlen($cloudName . '/'));
+			if(strpos($haystack, '/')){
+				$haystack = substr($haystack, 0, strpos($haystack, '/'));
+				return $haystack;
+			}
+		}
+
+		return null;
 	}
 
 	public static function get_api ()

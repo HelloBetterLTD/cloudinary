@@ -57,10 +57,12 @@
             },
 
             urlChanged: function() {
+                var self = this;
                 var id = $(this).val();
+                var holder = self.closest('div.cloudinaryupload');
                 if (id) {
                     $.ajax({
-                        url         : this.data('url') + 'getinfo',
+                        url         : this.data('url') + '/getinfo',
                         data        : {
                             cloudinary_id : id
                         },
@@ -68,19 +70,18 @@
                         type        : 'POST',
                         dataType    : 'json',
                         success     : function(data) {
-                            console.log(data);
+
+                            holder.find("input[name*='width']").val(data.width);
+                            holder.find("input[name*='height']").val(data.height);
+                            holder.find("input[name*='format']").val(data.format);
+                            holder.find("input[name*='size']").val(data.bytes);
+                            holder.find("input[name*='resource_type']").val(data.resource_type);
+                            holder.find('._js-additional-fields').show();
                         }
 
 
                     });
 
-                    /*
-                    this.data('url') + 'getinfo', {
-
-                    }, function(data) {
-
-                    });
-                    */
                 }
 
             }

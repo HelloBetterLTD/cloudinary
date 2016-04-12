@@ -10,7 +10,10 @@
 class CloudinaryImage extends CloudinaryFile
 {
 
-	
+	private static $db = array(
+		'Height'			=> 'Int',
+		'Width'				=> 'Int'
+	);
 	
 
 }
