@@ -94,7 +94,7 @@ class CloudinaryUpload extends FormField
 					'ResourceType' 		=> $value['resource_type'],
 					'Height' 			=> (int)$value['height'],
 					'Width' 			=> (int)$value['width'],
-					'Format' 			=> (int)$value['format'],
+					'Format' 			=> $value['format'],
 				));
 
 				$file->write();

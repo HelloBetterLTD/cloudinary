@@ -32,8 +32,6 @@ class CloudinaryImage extends CloudinaryFile
 	{
 		$sizes = Config::inst()->get('CloudinaryImage', 'sizes');
 		$bFirst = true;
-		$bLast = false;
-
 
 		$base = $sizes[0];
 		foreach($sizes as $size){
@@ -61,7 +59,7 @@ class CloudinaryImage extends CloudinaryFile
 
 			$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
 			$imgURL = Cloudinary::cloudinary_url($cloudinaryID . '.' . $this->Format, $options);
-			$bLast = $counter == count($sizes);
+			$bLast = $counter == count($sizes) || $base <= $size;
 
 
 			if ($bFirst) {
@@ -75,6 +73,7 @@ class CloudinaryImage extends CloudinaryFile
 					'URL'			=> $imgURL,
 					'MediaQuery'	=> '(min-width: ' . ($size + 1) . 'px)'
 				)));
+				break;
 			}
 			else {
 				$imageSizes->push(new ArrayData(array(
