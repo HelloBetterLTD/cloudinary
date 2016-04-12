@@ -10,6 +10,8 @@
 class CloudinaryImage extends CloudinaryFile
 {
 
+	private $sourceURL = '';
+
 	private static $sizes = array(
 		320,
 		375,
@@ -50,11 +52,12 @@ class CloudinaryImage extends CloudinaryFile
 			$sizeHeight = (int)(($height / $width) * $sizeWidth);
 
 			$options = array(
-				'width' 	=> $sizeWidth,
-				'height' 	=> $sizeHeight,
-				'crop'		=> $crop,
-				'quality'	=> 70,
-				'gravity'	=> $gravity
+				'width' 				=> $sizeWidth,
+				'height' 				=> $sizeHeight,
+				'crop'					=> $crop,
+				'quality'				=> 70,
+				'gravity'				=> $gravity,
+				'secure_distribution'	=> true
 			);
 
 			$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
@@ -97,5 +100,29 @@ class CloudinaryImage extends CloudinaryFile
 
 
 	}
+
+	public function SetSize($width, $height, $crop = 'fill', $gravity = 'faces')
+	{
+		CloudinaryFile::get_api();
+		$options = array(
+			'width' 				=> $width,
+			'height' 				=> $height,
+			'crop'					=> $crop,
+			'quality'				=> 70,
+			'gravity'				=> $gravity,
+			'secure_distribution'	=> true
+		);
+
+		$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
+		return Cloudinary::cloudinary_url($cloudinaryID . '.' . $this->Format, $options);
+	}
+
+}
+
+class CloudinaryImage_Cached extends CloudinaryImage
+{
+
+
+
 
 }
