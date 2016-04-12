@@ -94,6 +94,7 @@ class CloudinaryUpload extends FormField
 					'ResourceType' 		=> $value['resource_type'],
 					'Height' 			=> (int)$value['height'],
 					'Width' 			=> (int)$value['width'],
+					'Format' 			=> (int)$value['format'],
 				));
 
 				$file->write();
@@ -121,19 +122,14 @@ class CloudinaryUpload extends FormField
 				}
 			}
 
-
-//			$this->record = $record;
-//			parent::setValue($record->CloudinaryURL);
 		}
 
-		// echo '<pre>' . print_r($value, 1) . '</pre>'; die();
 
 		return parent::setValue($value, $record);
 	}
 
 	public function getImageRecord()
 	{
-		// echo '<pre>' . print_r($this->imageRecord, 1) . '</pre>'; die();
 		return $this->imageRecord;
 	}
 
