@@ -13,7 +13,8 @@ class CloudinaryConfigs extends DataExtension
 	private static $db = array(
 		'CloudName'				=> 'Varchar(100)',
 		'APIKey'				=> 'Varchar(100)',
-		'APISecret'				=> 'Varchar(100)'
+		'APISecret'				=> 'Varchar(100)',
+		'UploadPreset'			=> 'Varchar(100)'
 	);
 
 	public function updateCMSFields(FieldList $fields)
@@ -21,7 +22,8 @@ class CloudinaryConfigs extends DataExtension
 		$fields->addFieldsToTab('Root.Settings.Cloudinary', array(
 			TextField::create('CloudName'),
 			TextField::create('APIKey'),
-			TextField::create('APISecret')
+			TextField::create('APISecret'),
+			TextField::create('UploadPreset')
 		));
 	}
 
