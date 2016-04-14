@@ -73,4 +73,16 @@ class CloudinaryFile extends DataObject
 		return self::$api;
 	}
 
+	public function Link()
+	{
+		CloudinaryFile::get_api();
+		$options = array(
+			'secure_distribution'	=> true,
+			'secure'				=> true
+		);
+
+		$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
+		return Cloudinary::cloudinary_url($cloudinaryID . '.' . $this->Format, $options);
+	}
+
 }

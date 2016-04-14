@@ -57,7 +57,8 @@ class CloudinaryImage extends CloudinaryFile
 				'crop'					=> $crop,
 				'quality'				=> 70,
 				'gravity'				=> $gravity,
-				'secure_distribution'	=> true
+				'secure_distribution'	=> true,
+				'secure'				=> true
 			);
 
 			$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
@@ -110,7 +111,8 @@ class CloudinaryImage extends CloudinaryFile
 			'crop'					=> $crop,
 			'quality'				=> 70,
 			'gravity'				=> $gravity,
-			'secure_distribution'	=> true
+			'secure_distribution'	=> true,
+			'secure'				=> true
 		);
 
 		$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
