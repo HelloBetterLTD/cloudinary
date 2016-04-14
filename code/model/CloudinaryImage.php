@@ -101,7 +101,7 @@ class CloudinaryImage extends CloudinaryFile
 
 	}
 
-	public function SetSize($width, $height, $crop = 'fill', $gravity = 'faces')
+	public function SetImageSize($width, $height, $crop = 'fill', $gravity = 'faces')
 	{
 		CloudinaryFile::get_api();
 		$options = array(
