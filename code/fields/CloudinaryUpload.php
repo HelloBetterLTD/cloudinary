@@ -7,19 +7,24 @@
  * Time: 8:49 PM
  * To change this template use File | Settings | File Templates.
  */
+use \Cloudinary\Api;
+use \Cloudinary\Uploader;
+
 class CloudinaryUpload extends FormField
 {
 
 	private $children = null;
 	private $imageRecord = null;
 	private static $allowed_actions = array(
-		'getinfo'
+		'getinfo',
+		'upload',
+		'getLastFileData'
 	);
 
 	public function __construct($name, $title = null, $value = null) {
 		parent::__construct($name, $title, $value);
 		$this->addExtraClass('text _js-upload-area');
-		$this->setAttribute('placeholder', 'paste the url from cloudinary or drag and drop file');
+		$this->setAttribute('placeholder', 'paste the url from cloudinary or select file to upload');
 
 	}
 
@@ -39,6 +44,9 @@ class CloudinaryUpload extends FormField
 		$this->setAttribute('data-preset', $config->UploadPreset);
 		$this->setAttribute('data-url', $this->Link());
 
+		Requirements::javascript('cloudinary/javascript/thirdparty/jQuery-File-Upload-master/js/jquery.ui.widget.js');
+		Requirements::javascript('cloudinary/javascript/thirdparty/jQuery-File-Upload-master/js/jquery.iframe-transport.js');
+		Requirements::javascript('cloudinary/javascript/thirdparty/jQuery-File-Upload-master/js/jquery.fileupload.js');
 
 		Requirements::javascript('cloudinary/javascript/CloudinaryUpload.js');
 		Requirements::css('cloudinary/css/CloudinaryUpload.css');
@@ -138,6 +146,33 @@ class CloudinaryUpload extends FormField
 		if($this->imageRecord){
 			return $this->imageRecord->CloudinaryURL;
 		}
+	}
+
+	public function upload(SS_HTTPRequest $request)
+	{
+		$name = $this->getName();
+		$postVars = $request->postVar($name);
+
+		$tmpFileName = null;
+		if(isset($postVars['tmp_name']) && isset($postVars['tmp_name']['file']) && !empty($postVars['tmp_name']['file'])) {
+			$tmpFileName = $postVars['tmp_name']['file'];
+		}
+
+		if($tmpFileName && is_uploaded_file($tmpFileName)) {
+			CloudinaryFile::get_api();
+			$arrRet = Uploader::upload($tmpFileName);
+			Session::set('public_id', $arrRet['secure_url']);
+			Session::save();
+		}
+	}
+
+	public function getLastFileData()
+	{
+		$id = Session::get('public_id');
+		$_REQUEST['cloudinary_id'] = $id;
+		Session::clear('public_id');
+		Session::save();
+		return $this->getinfo();
 	}
 
 }

@@ -1,6 +1,6 @@
 <input $AttributesHTML />
-
-
+<br><br>
+<input type="file" name="{$Name}[file]" data-url="{$Link('upload')}">
 <input type="hidden" name="{$Name}[id]" value="{$ImageRecord.ID}">
 <input type="hidden" name="{$Name}[format]" value="{$ImageRecord.Format}">
 <input type="hidden" name="{$Name}[size]" value="{$ImageRecord.Size}">

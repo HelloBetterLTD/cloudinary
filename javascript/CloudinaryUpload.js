@@ -2,28 +2,33 @@
 
     $.entwine('ss', function($){
 
-        $('._js-upload-area').entwine({
+        $('div._js-upload-area').entwine({
 
             onmatch: function () {
 
                 var holder = $(this);
+                var input = holder.find('input._js-upload-area');
+                var fileInput = holder.find('input[type="file"]');
+                fileInput.fileupload({
+                    dataType: 'json'
+                }).bind('fileuploaddone', function(e, data){
+                    $.ajax({
+                        url         : input.data('url') + '/getLastFileData',
+                        method      : 'POST',
+                        type        : 'POST',
+                        dataType    : 'json',
+                        success     : function(data) {
+                            input.val(data.url);
+                            holder.find("input[name*='width']").val(data.width);
+                            holder.find("input[name*='height']").val(data.height);
+                            holder.find("input[name*='format']").val(data.format);
+                            holder.find("input[name*='size']").val(data.bytes);
+                            holder.find("input[name*='resource_type']").val(data.resource_type);
+                            holder.find('._js-additional-fields').show();
+                        }
 
-                var input = holder.find('input.cloudinaryupload');
 
-                $(document).unbind('dragover');
-                holder.bind('dragover', function (e) {
-                    timeout = window.cloudinaryTimeout;
-                    var $target = $(e.target);
-                    holder.addClass('active');
-                    if (!timeout) {
-                        holder.addClass('active');
-                    } else {
-                        clearTimeout(timeout);
-                    }
-                    window.cloudinaryTimeout = setTimeout(function () {
-                        window.cloudinaryTimeout = null;
-                        holder.removeClass('active hover');
-                    }, 100);
+                    });
                 });
 
 
@@ -31,16 +36,8 @@
                     e.preventDefault();
                 });
 
-                holder.bind('drop', function (e) {
 
-                    console.log(e);
-
-                    e.preventDefault();
-
-                });
-
-
-            },
+            }
 
         });
 
