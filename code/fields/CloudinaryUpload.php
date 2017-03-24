@@ -97,6 +97,20 @@ class CloudinaryUpload extends FormField
 					}
 				}
 
+				if(!$value['format']){
+					$api = CloudinaryFile::get_api();
+					$publicID = CloudinaryFile::get_public_id($value['url']);
+					$type = CloudinaryFile::get_resource_type($value['url']);
+					if($data = $api->resource(urlencode($publicID), array('resource_type'		=> $type))){
+						$value['size']			= $data['bytes'];
+						$value['resource_type']	= $data['resource_type'];
+						$value['height']		= isset($data['height']) ? $data['height'] : 0;
+						$value['width']			= isset($data['width']) ? $data['width'] : 0;
+						$value['format']		= $data['format'];
+					}
+				}
+
+
 				$file->update(array(
 					'CloudinaryURL' 	=> $value['url'],
 					'Title' 			=> $value['title'],

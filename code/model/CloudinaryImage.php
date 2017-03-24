@@ -98,8 +98,7 @@ class CloudinaryImage extends CloudinaryFile
 			'Width'			=> $width,
 			'Height'		=> $height
 		)))->renderWith('ResponsiveImage');
-
-
+		
 	}
 
 	public function SetImageSize($width, $height, $crop = 'fill', $gravity = 'faces')
@@ -112,7 +111,7 @@ class CloudinaryImage extends CloudinaryFile
 			'quality'				=> 70,
 			'gravity'				=> $gravity,
 			'secure_distribution'	=> true,
-			'secure'				=> true
+			'secure'				=> true,
 		);
 
 		$cloudinaryID = CloudinaryFile::get_public_id($this->CloudinaryURL);
