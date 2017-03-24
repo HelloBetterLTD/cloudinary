@@ -55,11 +55,10 @@ class CloudinaryUpload extends FormField
 
 	public function getinfo()
 	{
-		$publicID = CloudinaryFile::get_public_id($_REQUEST['cloudinary_id']);
 		$api = CloudinaryFile::get_api();
 
+		$publicID = CloudinaryFile::get_public_id($_REQUEST['cloudinary_id']);
 		$type = CloudinaryFile::get_resource_type($_REQUEST['cloudinary_id']);
-
 
 
 		$data = $api->resource(urlencode($publicID), array(
@@ -85,15 +84,19 @@ class CloudinaryUpload extends FormField
 			if($value['id']){
 				$file = CloudinaryFile::get()->byID($value['id']);
 			}
+
 			if(!$file){
 				$file = new CloudinaryFile();
 			}
 
-			if($value['resource_type'] == 'image'){
-				$file->ClassName = 'CloudinaryImage';
-			}
-
 			if($value['url']) {
+				if(!$file) {
+					$info = CloudinaryFile::get_resource_type($value['url']);
+					if ($info == 'image') {
+						$file = new CloudinaryImage();
+					}
+				}
+
 				$file->update(array(
 					'CloudinaryURL' 	=> $value['url'],
 					'Title' 			=> $value['title'],

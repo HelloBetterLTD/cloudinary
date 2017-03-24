@@ -43,7 +43,7 @@ class CloudinaryFile extends DataObject
 	{
 		$config = SiteConfig::current_site_config();
 		$cloudName = $config->CloudName;
-
+		// 
 
 		if(($nameStartsAt = strpos($haystack, $cloudName . '/')) >= 0){
 			$haystack = substr($haystack, $nameStartsAt + strlen($cloudName . '/'));
