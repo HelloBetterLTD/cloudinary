@@ -42,8 +42,10 @@ class MigrateAssetsCloudinary extends BuildTask
 				}
 				$newFile->write();
 
-				DB::query('UPDATE `CloudinaryFile` SET ID = ' . $file->ID . ' WHERE ID = ' . $newFile->ID);
-
+				try {
+					DB::query('UPDATE `CloudinaryFile` SET ID = ' . $file->ID . ' WHERE ID = ' . $newFile->ID);
+					DB::query('UPDATE `CloudinaryImage` SET ID = ' . $file->ID . ' WHERE ID = ' . $newFile->ID);
+				} catch(Exception $e) {}
 				echo $file->ID . ' - ' . $file->getTitle() . '<br>';
 
 
