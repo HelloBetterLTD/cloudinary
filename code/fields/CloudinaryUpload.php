@@ -81,7 +81,7 @@ class CloudinaryUpload extends FormField
 			$value = $this->dataValue();
 
 			$file = null;
-			if($value['id']){
+			if($value['id'] && (int)$value['id']){
 				$file = CloudinaryFile::get()->byID($value['id']);
 			}
 
@@ -90,7 +90,7 @@ class CloudinaryUpload extends FormField
 			}
 
 			if($value['url']) {
-				if(!$file) {
+				if(!$file->ID) {
 					$info = CloudinaryFile::get_resource_type($value['url']);
 					if ($info == 'image') {
 						$file = new CloudinaryImage();
